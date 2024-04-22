@@ -3,17 +3,21 @@ const express = require("express");
 const app = express();
 const morgan = require("morgan");
 const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+dotenv.config();
 
-const customersRouters = require("./api/routers/cusomers")
-const serviceRouters = require("./api/routers/services")
+const customersRouters = require("./api/routers/cusomers");
+const serviceRouters = require("./api/routers/services");
+const ticketRouters = require("./api/routers/tickets");
+const stasffUserRouters = require("./api/routers/staff-user");
 
 mongoose
-  .connect("mongodb://localhost:27017/node-rest-computer-repair")
+  .connect(process.env.MONGO_DB_CONNECT)
   .then(() => console.log("Connected to Database!"));
 mongoose.Promise = global.Promise;
 
 app.use(morgan("dev"));
-app.use("/uploads",express.static('uploads'))
+app.use("/uploads", express.static("uploads"));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -33,20 +37,22 @@ app.use((req, res, next) => {
 
 app.use("/customers", customersRouters);
 app.use("/services", serviceRouters);
+app.use("/tickets", ticketRouters);
+app.use("/staff-auth", stasffUserRouters);
 
 app.use((req, res, next) => {
-    const error = new Error("Not found - Please using Postman");
-    error.status = 404;
-    next(error);
-  });
-  
-  app.use((req, res, next) => {
-    res.status(error.status || 500);
-    res.json({
-      error: {
-        message: error.message,
-      },
-    });
-  });
+  const error = new Error("Not found - Please using Postman");
+  error.status = 404;
+  next(error);
+});
 
-  module.exports = app
+app.use((req, res, next) => {
+  res.status(error.status || 500);
+  res.json({
+    error: {
+      message: error.message,
+    },
+  });
+});
+
+module.exports = app;
