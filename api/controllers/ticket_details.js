@@ -18,9 +18,7 @@ exports.ticket_detail_get_all = (req, res, next) => {
     .populate("serviceId", "_id serviceName exceptedPrice")
     .exec()
     .then((doc) => {
-      res.status(200).json({
-        ticketDetail: doc,
-      });
+      res.status(200).json(doc);
     })
     .catch((err) => {
       console.error(err);
@@ -80,7 +78,7 @@ exports.ticket_detail_get_one = (req, res, next) => {
     .populate("serviceId", "_id serviceName exceptedPrice")
     .then((docs) => {
       res.status(200).json({
-        ticketDetail: docs,
+        docs,
         request: {
           type: "GET",
           url:
