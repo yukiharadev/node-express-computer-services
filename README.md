@@ -1,6 +1,6 @@
-##How to use ? 
+### How to use ? 
 
---Clone git repo
+-- Clone git repo
 
 -- create database in mongodb and update string .env
 
