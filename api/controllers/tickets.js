@@ -12,7 +12,7 @@ exports.ticket_get_all = (req, res, next) => {
     .exec()
     .then((result) => {
       res.status(200).json({
-        order: result,
+        result,
         request: {
           type: "GET",
           url: "http://localhost:3002/tickets/",

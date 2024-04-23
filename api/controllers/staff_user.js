@@ -6,6 +6,14 @@ dotenv.config();
 
 const StaffUser = require("../models/staff_user");
 
+exports.staff_get_full = (req, res, next) => {
+  StaffUser.find()
+    .select("_id staffName")
+    .exec()
+    .then((docs) => {
+      res.status(200).json(docs);
+    });
+};
 exports.staff_user_signup = (req, res, next) => {
   StaffUser.find({
     username: req.body.username,
