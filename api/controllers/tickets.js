@@ -81,17 +81,15 @@ exports.ticket_patch = (req, res, next) => {
   Ticket.updateOne({ _id: req.params.ticketId }, { $set: updateOps })
     .exec()
     .then(() => {
-      res
-        .status(200)
-        .json({
-          message: "Ticket updated",
-          request: {
-            type: "GET",
-            url: "http://localhost:3002/tickets/" + req.params.ticketId,
-          },
-        })
-        .catch((err) => res.status(500).json({ error: err }));
-    });
+      res.status(200).json({
+        message: "Ticket updated",
+        request: {
+          type: "GET",
+          url: "http://localhost:3002/tickets/" + req.params.ticketId,
+        },
+      });
+    })
+    .catch((err) => res.status(500).json({ error: err }));
 };
 
 exports.ticket_delete = (req, res, next) => {
