@@ -29,7 +29,7 @@ exports.ticket_detail_get_all = (req, res, next) => {
 };
 
 exports.ticket_detail_post = (req, res, next) => {
-  Ticket.findById(req.body.ticketId).then((ticket) => {
+  Ticket.findById(req.body.ticketDetailId).then((ticket) => {
     if (!ticket) {
       return res.status(404).json({
         message: "Ticket not found",
@@ -64,4 +64,77 @@ exports.ticket_detail_post = (req, res, next) => {
       });
     }
   });
+};
+
+exports.ticket_detail_get_one = (req, res, next) => {
+  TicketDetail.findById(req.params.ticketDetailId)
+    .select("_id ticketId serviceId")
+    .populate({
+      path: "ticketId",
+      select: "_id customerId time",
+      populate: {
+        path: "customerId",
+        select: "name phoneNumber _id",
+      },
+    })
+    .populate("serviceId", "_id serviceName exceptedPrice")
+    .then((docs) => {
+      res.status(200).json({
+        ticketDetail: docs,
+        request: {
+          type: "GET",
+          url:
+            "http://localhost:3000/api/ticket_details/" + req.params.ticketId,
+        },
+      });
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err.message });
+    });
+};
+
+exports.ticket_detail_delete = (req, res) => {
+  TicketDetail.deleteMany({ _id: req.params.ticketDetailId })
+    .exec()
+    .then(() => {
+      res.status(200).json({
+        message: "Ticket Detail deleted",
+        request: {
+          type: "POST",
+          url: "http://localhost:3000/api/ticket_details/",
+          body: {
+            ticketId: "String",
+            serviceId: "String",
+          },
+        },
+      });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).json({ error: err.message });
+    });
+};
+
+exports.ticket_detail_patch = (req, res) => {
+  const updateOps = {};
+  for (const ops of req.body) {
+    updateOps[ops.propName] = ops.value;
+  }
+  TicketDetail.updateOne(
+    { _id: req.params.ticketDetailId },
+    { $set: updateOps }
+  )
+    .exec()
+    .then(() =>
+      res.status(200).json({
+        message: "Ticket Detail Updated",
+        request: {
+          type: "GET",
+          url:
+            "http://localhost:3000/api/ticket_details/" +
+            req.params.ticketDetailId,
+        },
+      })
+    )
+    .catch((err) => res.status(500).json({ error: err }));
 };
