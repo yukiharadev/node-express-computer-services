@@ -106,3 +106,21 @@ exports.staff_user_delete = (req, res, next) => {
       });
     });
 };
+
+exports.staff_user_patch = (req, res, next) => {
+  const updateOops = {};
+  for (const ops of req.body) {
+    updateOops[ops.propName] = ops.value;
+  }
+  StaffUser.updateOne({ _id: req.params.staffId }, { $set: updateOops }).then(
+    () => {
+      res.status(200).json({
+        message: "Staff updated successfully",
+        request: {
+          type: "PATCH",
+          url: "http://localhost:3000/api/staff/" + req.params.staffId,
+        },
+      });
+    }
+  );
+};
