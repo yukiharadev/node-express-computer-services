@@ -10,7 +10,6 @@ const customersRouters = require("./api/routers/cusomers");
 const serviceRouters = require("./api/routers/services");
 const ticketRouters = require("./api/routers/tickets");
 const stasffUserRouters = require("./api/routers/staff-user");
-const computerRouters = require("./api/routers/computer");
 const ticketDetailRouters = require("./api/routers/ticket_details");
 const ticketProcessRouters = require("./api/routers/ticket_process");
 
@@ -45,7 +44,6 @@ app.use("/customers", customersRouters);
 app.use("/services", serviceRouters);
 app.use("/tickets", ticketRouters);
 app.use("/staff-auth", stasffUserRouters);
-app.use("/computers", computerRouters);
 app.use("/ticketdetails", ticketDetailRouters);
 app.use("/ticketprocess", ticketProcessRouters);
 
