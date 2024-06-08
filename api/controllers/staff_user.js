@@ -118,7 +118,7 @@ exports.staff_user_patch = (req, res, next) => {
         message: "Staff updated successfully",
         request: {
           type: "PATCH",
-          url: "http://localhost:3000/api/staff/" + req.params.staffId,
+          url: "http://localhost:3002/api/staff/" + req.params.staffId,
         },
       });
     }

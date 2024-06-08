@@ -12,7 +12,7 @@ const ticketRouters = require("./api/routers/tickets");
 const stasffUserRouters = require("./api/routers/staff-user");
 const ticketDetailRouters = require("./api/routers/ticket_details");
 const ticketProcessRouters = require("./api/routers/ticket_process");
-
+const invoiceRouters = require("./api/routers/invoice");
 //connect to mongodb
 
 mongoose
@@ -46,6 +46,7 @@ app.use("/tickets", ticketRouters);
 app.use("/staff-auth", stasffUserRouters);
 app.use("/ticketdetails", ticketDetailRouters);
 app.use("/ticketprocess", ticketProcessRouters);
+app.use("/invoice", invoiceRouters);
 
 app.use((req, res, next) => {
   const error = new Error("Not found - Please using Postman");

@@ -27,7 +27,7 @@ exports.ticket_detail_get_all = (req, res, next) => {
 };
 
 exports.ticket_detail_post = (req, res, next) => {
-  Ticket.findById(req.body.ticketDetailId).then((ticket) => {
+  Ticket.findById(req.body.ticketId).then((ticket) => {
     if (!ticket) {
       return res.status(404).json({
         message: "Ticket not found",

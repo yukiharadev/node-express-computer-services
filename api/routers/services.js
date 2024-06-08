@@ -21,7 +21,7 @@ const upload = multer({
   },
 });
 
-router.get("/", checkAuth, serviceController.services_get_all);
+router.get("/", serviceController.services_get_all);
 router.post(
   "/",
   checkAuth,
