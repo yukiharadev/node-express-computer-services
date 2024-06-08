@@ -18,12 +18,10 @@ exports.invoice_get_all = (req, res, next) => {
       const response = {
         count: docs.length,
         invoices: docs.map((doc) => {
-          let customerInfo = doc.ticketId ? doc.ticketId.customerId : null;
-
           return {
             _id: doc._id,
             ticketId: doc.ticketId,
-            customer: customerInfo,
+
             totalPrice: doc.totalPrice,
             payment: doc.payment,
             request: {
@@ -107,4 +105,31 @@ exports.invoice_get_id = (req, res) => {
       }
     })
     .catch((err) => res.status(500).json({ error: err }));
+};
+
+exports.get_invoices_by_customerId = (req, res, next) => {
+  // Giả sử customerId được chuyển đến qua req.params
+  const customerId = req.params.customerId;
+
+  // Đầu tiên, tìm tất cả tickets của customer
+  Ticket.find({ customerId: customerId })
+    .then((tickets) => {
+      // Từ danh sách ticket, trích xuất tất cả ticketId
+      const ticketIds = tickets.map((ticket) => ticket._id);
+
+      // Sau đó, dùng mảng ticketId để tìm invoices liên quan
+      return Invoice.find({ ticketId: { $in: ticketIds } });
+    })
+    .then((invoices) => {
+      // Trả về danh sách các invoices tìm được
+      if (invoices.length === 0) {
+        return res
+          .status(404)
+          .json({ message: "No invoices found for this customer." });
+      }
+      res.status(200).json(invoices);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
 };
