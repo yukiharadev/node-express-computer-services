@@ -80,6 +80,8 @@ exports.staff_login = (req, res) => {
             }
           );
           return res.status(200).json({
+            userId: user[0]._id,
+            username: user[0].username,
             message: "Authentication successful",
             token: token,
           });
