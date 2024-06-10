@@ -15,7 +15,7 @@ exports.ticket_detail_get_all = (req, res, next) => {
         select: "name phoneNumber _id",
       },
     })
-    .populate("serviceId", "_id serviceName exceptedPrice")
+    .populate("serviceId", "_id serviceName expectedPrice")
     .exec()
     .then((doc) => {
       res.status(200).json(doc);
@@ -75,7 +75,7 @@ exports.ticket_detail_get_one = (req, res, next) => {
         select: "name phoneNumber _id",
       },
     })
-    .populate("serviceId", "_id serviceName exceptedPrice")
+    .populate("serviceId", "_id serviceName expectedPrice")
     .then((docs) => {
       res.status(200).json({
         docs,

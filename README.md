@@ -26,3 +26,6 @@ http.patch: body:[{
 }]
 
 http.delete : sending method delete http://localhost:3002/{name}/{id}
+
+### Time format : days/month/year aahxx( aa: hours , bb: minute) example: (01/11/2003 11h30)
+
