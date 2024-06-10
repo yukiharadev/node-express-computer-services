@@ -10,7 +10,7 @@ exports.services_get_all = (req, res, next) => {
         services: docs.map((doc) => {
           return {
             _id: doc._id,
-            servicesName: doc.serviceName,
+            serviceName: doc.serviceName,
             description: doc.description,
             expectedPrice: doc.expectedPrice,
             serviceUrl: doc.serviceUrl,

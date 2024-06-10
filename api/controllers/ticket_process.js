@@ -51,7 +51,6 @@ exports.ticket_process_post = (req, res, next) => {
             ticketId: req.body.ticketId,
             staffUserId: req.body.staffUserId,
             status: req.body.status,
-            price: req.body.price,
           });
           ticketProcess
             .save()
@@ -64,7 +63,6 @@ exports.ticket_process_post = (req, res, next) => {
                   ticketId: result.ticketId,
                   staffUserId: result.staffUserId,
                   status: result.status,
-                  price: result.price,
                   request: {
                     type: "GET",
                     url: "http://localhost:3002/ticket_processes/" + result._id,
@@ -159,7 +157,6 @@ exports.ticket_process_delete = (req, res) => {
             ticketId: "Id",
             staffUserId: "Id",
             status: "String",
-            price: "String",
           },
         },
       });
